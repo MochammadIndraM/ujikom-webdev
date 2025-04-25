@@ -23,4 +23,9 @@ class DataSupplier extends Model
 
     // Tentukan jika menggunakan timestamps
     public $timestamps = true;
+
+    public function obat()
+    {
+        return $this->hasMany(DataObat::class, 'kode_supplier', 'kode_supplier');
+    }
 }

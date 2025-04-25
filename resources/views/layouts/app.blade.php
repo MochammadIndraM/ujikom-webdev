@@ -29,6 +29,49 @@
     <div id="app">
         @include('layouts.sidebar')
         <div id="main">
+            <div class="navbar navbar-expand-lg navbar-light" style="background-color: transparent; height: 0px;">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center ms-auto">
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle"
+                                id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+
+                                <span>{{ Auth::user()->name }}</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    <a href="#" class="dropdown-item" id="logout-button">Logout</a>
+                                </li>
+                                <script>
+                                    document.getElementById('logout-button').addEventListener('click', function (e) {
+                                        e.preventDefault();
+                                        Swal.fire({
+                                            title: 'Are you sure?',
+                                            text: "You will be logged out!",
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonColor: '#3085d6',
+                                            cancelButtonColor: '#d33',
+                                            confirmButtonText: 'Yes, logout!'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                document.getElementById('logout-form').submit();
+                                            }
+                                        });
+                                    });
+                                </script>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @yield('content')
             @include('layouts.footer')
         </div>

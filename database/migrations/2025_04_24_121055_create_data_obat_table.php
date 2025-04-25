@@ -11,8 +11,8 @@ class CreateDataObatTable extends Migration
         Schema::create('data_obat', function (Blueprint $table) {
             $table->string('kode_obat')->primary(); // Primary key
             $table->string('nama_obat');
-            $table->string('jenis');
-            $table->string('satuan');
+            $table->enum('jenis', ['Obat Generik', 'Obat Resep', 'Obat Herbal']); // Enum untuk jenis obat
+            $table->enum('satuan', ['Tablet', 'Kapsul', 'Botol', 'Tube', 'Syrup']); // Enum untuk satuan obat
             $table->integer('harga_beli');
             $table->integer('harga_jual');
             $table->integer('stok');

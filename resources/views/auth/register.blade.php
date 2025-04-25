@@ -28,7 +28,7 @@
                         <form action="{{ route('register.submit') }}" method="POST" id="registerForm">
                             @csrf
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <!-- Nama -->
                                     <div class="form-group position-relative has-icon-left mb-3">
                                         <input type="text" name="nama" class="form-control"

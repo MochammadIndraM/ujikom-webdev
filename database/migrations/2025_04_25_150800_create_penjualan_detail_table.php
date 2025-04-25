@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('penjualan_detail', function (Blueprint $table) {
+            $table->id();
+            $table->string('nota');
+            $table->string('kode_obat');
+            $table->integer('jumlah');
+            $table->timestamps();
+
+            // Foreign key constraints
+            $table->foreign('nota')
+                ->references('nota')
+                ->on('penjualan')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreign('kode_obat')
+                ->references('kode_obat')
+                ->on('data_obat')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('penjualan_detail');
+    }
+};

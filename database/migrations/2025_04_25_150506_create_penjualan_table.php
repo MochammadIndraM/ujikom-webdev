@@ -15,16 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('nota')->unique();
             $table->date('tanggal_nota');
-            $table->string('kode_pelanggan');
+            $table->string('kode_supplier');
             $table->string('diskon')->nullable();
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('kode_pelanggan')
-                ->references('kode_pelanggan')
-                ->on('data_pelanggan')
+            $table->foreign('kode_supplier')
+                ->references('kode_supplier')
+                ->on('data_supplier')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
+
 
             $table->foreign('diskon')
                 ->references('diskon')

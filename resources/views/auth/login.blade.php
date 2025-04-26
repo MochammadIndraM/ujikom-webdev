@@ -48,10 +48,10 @@
                                 class="btn btn-primary btn-block shadow-sm mt-3 w-100">Login</button>
                         </form>
 
-                        <div class="text-center mt-4">
+                        {{-- <div class="text-center mt-4">
                             <p class='text-gray-600'>Don't have an account? <a href="/register"
                                     class="font-bold">Register</a>.</p>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

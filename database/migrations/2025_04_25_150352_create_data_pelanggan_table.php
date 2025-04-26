@@ -14,7 +14,6 @@ class CreateDataPelangganTable extends Migration
             $table->string('alamat');
             $table->string('kota');
             $table->string('telpon');
-            $table->enum('status', ['aktif', 'non-aktif'])->default('non-aktif');
             $table->timestamps();
         });
     }

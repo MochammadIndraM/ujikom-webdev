@@ -6,28 +6,30 @@ use App\Models\DataSupplier;
 use App\Models\DataObat;
 use App\Models\Pembelian;
 use App\Models\PembelianDetail;
+use App\Models\Penjualan;
+use App\Models\PenjualanDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PembelianController extends Controller
+class PenjualanController extends Controller
 {
     public function index()
     {
         // Ambil semua data supplier dan obat
         $suppliers = DataSupplier::all();
         $obats = DataObat::all();
-        $lastnote = Pembelian::orderBy('nota', 'desc')->first();
+        $lastnote = Penjualan::orderBy('nota', 'desc')->first();
 
-        // Generate kode pelanggan berikutnya
+        // Generate kode penjualan berikutnya
         if ($lastnote) {
             $lastKode = substr($lastnote->nota, 3); // ambil angka belakang, contoh '003'
-            $nextKode = 'PB' . str_pad((int)$lastKode + 1, 3, '0', STR_PAD_LEFT);
+            $nextKode = 'PJ' . str_pad((int)$lastKode + 1, 3, '0', STR_PAD_LEFT);
         } else {
-            $nextKode = 'PB001';
+            $nextKode = 'PJ001';
         }
 
         // Kirim data ke view
-        return view('transaksi.pembelian', [
+        return view('transaksi.penjualan', [
             'suppliers' => $suppliers,
             'obats' => $obats,
             'lastKode' => $nextKode,
@@ -66,15 +68,15 @@ class PembelianController extends Controller
         $kodeSupplier = $dataObat->kode_supplier;
 
 
-        // Simpan data ke tabel pembelian
-        Pembelian::create([
+        // Simpan data ke tabel penjualan
+        Penjualan::create([
             'nota' => $request->nota,
             'tanggal_nota' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->tanggal_nota)->format('Y-m-d'),
             'kode_supplier' => $kodeSupplier, // Ambil dari database
             'diskon' => $request->diskon ?? null, // Menambahkan pengecekan untuk nilai diskon
         ]);
-        // Simpan data ke tabel pembelian_detail
-        PembelianDetail::create([
+        // Simpan data ke tabel penjualan_detail
+        PenjualanDetail::create([
             'nota' => $request->nota,
             'kode_obat' => $request->kode_obat,
             'jumlah' => $request->jumlah,
@@ -83,19 +85,18 @@ class PembelianController extends Controller
         ]);
 
         DataObat::where('kode_obat', $request->kode_obat)->update([
-            'stok' => DB::raw('stok + ' . $request->jumlah),
+            'stok' => DB::raw('stok -' . $request->jumlah),
         ]);
-
-        return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil disimpan!');
+        return redirect()->route('penjualan.index')->with('success', 'Data penjualan berhasil disimpan!');
     }
 
     public function show()
     {
-        // Mengambil semua data pembelian beserta relasi supplier dan pembelian_detail
-        $pembelians = Pembelian::all();
-        $details = PembelianDetail::all();
+        // Mengambil semua data penjualan beserta relasi supplier dan penjualan_detail
+        $penjualans = Penjualan::all();
+        $details = PenjualanDetail::all();
 
         // Mengirim data ke view
-        return view('riwayat.pembelian', compact('pembelians', 'details'));
+        return view('riwayat.penjualan', compact('penjualans', 'details'));
     }
 }

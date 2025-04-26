@@ -33,4 +33,9 @@ class DataSupplier extends Model
     {
         return $this->hasMany(Pembelian::class, 'kode_supplier', 'kode_supplier');
     }
+
+    public function penjualan()
+    {
+        return $this->hasMany(Penjualan::class, 'kode_supplier', 'kode_supplier');
+    }
 }

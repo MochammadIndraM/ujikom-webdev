@@ -47,11 +47,62 @@
                 @if ($userRole === 'admin')
                     <li class="sidebar-title">Master Data</li>
                     <li class="sidebar-item">
+                        <a href="/data-supplier" class="sidebar-link">
+                            <i class="bi bi-truck-front-fill"></i>
+                            <span>Data Supplier</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/data-obat" class="sidebar-link">
+                            <i class="bi bi-capsule-pill"></i> <!-- Ikon obat -->
+                            <span>Data Obat</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a href="/data-apoteker" class="sidebar-link">
                             <i class="bi bi-person-badge-fill"></i> <!-- Ikon apoteker -->
                             <span>Data Apoteker</span>
                         </a>
                     </li>
+
+                    <li class="sidebar-item">
+                        <a href="/data-pelanggan" class="sidebar-link">
+                            <i class="bi bi-person-lines-fill"></i>
+                            <span>Data Pelanggan</span>
+                        </a>
+                    </li>
+
+
+                    <li class="sidebar-title">Transaksi</li>
+                    <li class="sidebar-item">
+                        <a href="/pembelian" class="sidebar-link">
+                            <i class="bi bi-cart-plus-fill"></i> <!-- Ikon untuk pembelian -->
+                            <span>Pembelian</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="/penjualan" class="sidebar-link">
+                            <i class="bi bi-cash-stack"></i> <!-- Ikon untuk penjualan -->
+                            <span>Penjualan</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item has-sub">
+                        <a href="#" class="sidebar-link">
+                            <i class="bi bi-stack"></i>
+                            <span>Riwayat</span>
+                        </a>
+                        <ul class="submenu">
+                            <li class="submenu-item">
+                                <a href="/riwayat-pembelian" class="submenu-link">Pembelian</a>
+                            </li>
+                            <li class="submenu-item">
+                                <a href="/riwayat-penjualan" class="submenu-link">Penjualan</a>
+                            </li>
+                        </ul>
+                    </li>
+                @elseif ($userRole === 'apoteker')
+                    <li class="sidebar-title">Master Data</li>
                     <li class="sidebar-item">
                         <a href="/data-obat" class="sidebar-link">
                             <i class="bi bi-capsule-pill"></i> <!-- Ikon obat -->
@@ -62,12 +113,6 @@
                         <a href="/data-pelanggan" class="sidebar-link">
                             <i class="bi bi-person-lines-fill"></i>
                             <span>Data Pelanggan</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="/data-supplier" class="sidebar-link">
-                            <i class="bi bi-truck-front-fill"></i>
-                            <span>Data Supplier</span>
                         </a>
                     </li>
 
@@ -92,28 +137,12 @@
                         </a>
                         <ul class="submenu">
                             <li class="submenu-item">
-                                <a href="component-accordion.html" class="submenu-link">Pembelian</a>
+                                <a href="/riwayat-pembelian" class="submenu-link">Pembelian</a>
                             </li>
                             <li class="submenu-item">
-                                <a href="component-alert.html" class="submenu-link">Penjualan</a>
+                                <a href="/riwayat-penjualan" class="submenu-link">Penjualan</a>
                             </li>
                         </ul>
-                    </li>
-                @elseif ($userRole === 'apoteker')
-                    <li class="sidebar-title">Master Data</li>
-                    <li class="sidebar-item">
-                        <a href="/data-obat" class="sidebar-link">
-                            <i class="bi bi-capsule-pill"></i> <!-- Ikon obat -->
-                            <span>Data Obat</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-title">Transaksi</li>
-                    <li class="sidebar-item">
-                        <a href="/penjualan" class="sidebar-link">
-                            <i class="bi bi-cash-stack"></i> <!-- Ikon untuk penjualan -->
-                            <span>Penjualan</span>
-                        </a>
                     </li>
                 @endif
 
@@ -139,8 +168,18 @@
 
         sidebarItems.forEach(item => {
             const link = item.querySelector('a');
+            const subMenuLinks = item.querySelectorAll('.submenu-item a');
+
             if (link && link.getAttribute('href') === currentPath) {
                 item.classList.add('active');
+            } else if (subMenuLinks.length > 0) {
+                subMenuLinks.forEach(subLink => {
+                    if (subLink.getAttribute('href') === currentPath) {
+                        item.classList.add('active');
+                        item.classList.add(
+                        'has-sub-active'); // Optional: Add a class for styling
+                    }
+                });
             } else {
                 item.classList.remove('active');
             }

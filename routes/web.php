@@ -8,7 +8,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\SupplierController;
+use App\Models\Penjualan;
 
 // Authentication Routes
 Route::get('/', [ObatController::class, 'showIndex'])->name('home');
@@ -52,8 +54,13 @@ Route::middleware(['auth'])->group(function () {
     // Route untuk mendapatkan data obat berdasarkan supplier
     Route::get('/get-obat-by-supplier/{supplierId}', [PembelianController::class, 'getObatBySupplier'])->name('pembelian.getObatBySupplier');
 
+    Route::get('/riwayat-pembelian', [PembelianController::class, 'show'])->name('riwayat.pembelian');
 
-    Route::get('/penjualan', function () {
-        return view('transaksi.penjualan');
-    })->name('penjualan');
+
+    // Route untuk halaman penjualan
+    Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
+    Route::post('/penjualan/simpan', [PenjualanController::class, 'simpan'])->name('penjualan.simpan');
+    // Route untuk mendapatkan data obat berdasarkan supplier
+    Route::get('/get-obat-by-supplier/{supplierId}', [PenjualanController::class, 'getObatBySupplier'])->name('penjualan.getObatBySupplier');
+    Route::get('/riwayat-penjualan', [PenjualanController::class, 'show'])->name('riwayat.penjualan');
 });

@@ -80,6 +80,10 @@ class PembelianController extends Controller
             'harga' => $request->harga,
             'subtotal' => $request->subtotal,
         ]);
+
+        DataObat::where('kode_obat', $request->kode_obat)->update([
+            'stok' => \DB::raw('stok + ' . $request->jumlah),
+        ]);
         return redirect()->route('pembelian.index')->with('success', 'Data pembelian berhasil disimpan!');
     }
 }

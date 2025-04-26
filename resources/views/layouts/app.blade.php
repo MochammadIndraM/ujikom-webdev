@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="./assets/compiled/css/table-datatable.css">
     <link rel="stylesheet" href="./assets/compiled/css/app.css">
     <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -44,13 +45,14 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
                                     <a href="#" class="dropdown-item" id="logout-button">Logout</a>
                                 </li>
                                 <script>
-                                    document.getElementById('logout-button').addEventListener('click', function (e) {
+                                    document.getElementById('logout-button').addEventListener('click', function(e) {
                                         e.preventDefault();
                                         Swal.fire({
                                             title: 'Are you sure?',

@@ -17,12 +17,18 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    // Pastikan kolom 'kode_apoteker' ada di tabel 'users'
     protected $fillable = [
         'name',
         'email',
         'password',
+        'kode_apoteker', // Tambahkan ini jika belum ada
     ];
 
+    public function apoteker()
+    {
+        return $this->hasOne(DataApoteker::class, 'kode_apoteker', 'kode_apoteker');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

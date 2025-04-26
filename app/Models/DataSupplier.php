@@ -28,4 +28,9 @@ class DataSupplier extends Model
     {
         return $this->hasMany(DataObat::class, 'kode_supplier', 'kode_supplier');
     }
+
+    public function pembelian()
+    {
+        return $this->hasMany(Pembelian::class, 'kode_supplier', 'kode_supplier');
+    }
 }

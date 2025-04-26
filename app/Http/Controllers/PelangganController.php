@@ -44,6 +44,7 @@ class PelangganController extends Controller
         return view('auth.register', compact('nextKode'));
     }
 
+
     public function store(Request $request)
     {
         // Validasi data yang diterima

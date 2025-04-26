@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nota')->unique();
             $table->date('tanggal_nota');
             $table->string('kode_supplier');
-            $table->string('kode_apoteker');
             $table->string('diskon')->nullable();
             $table->timestamps();
 
@@ -27,11 +26,6 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
 
-            $table->foreign('kode_apoteker')
-                ->references('kode_apoteker')
-                ->on('data_apoteker')
-                ->onUpdate('cascade')
-                ->onDelete('restrict');
 
             $table->foreign('diskon')
                 ->references('diskon')

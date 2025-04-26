@@ -7,14 +7,13 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\SupplierController;
 
 // Authentication Routes
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', [ObatController::class, 'showIndex'])->name('home');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
@@ -23,7 +22,6 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 Route::middleware(['auth'])->group(function () {
     // Master Data - Obat
     Route::get('/data-obat', [ObatController::class, 'index'])->name('admin.data-obat');
-    Route::get('/', [ObatController::class, 'showIndex'])->name('index');
     Route::post('/data-obat', [ObatController::class, 'store'])->name('obat.store');
     Route::put('/data-obat/{kode_obat}', [ObatController::class, 'update'])->name('obat.update');
     Route::delete('/data-obat/{kode_obat}', [ObatController::class, 'destroy'])->name('obat.destroy');
@@ -47,9 +45,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/data-apoteker/{kode_apoteker}', [ApotekerController::class, 'destroy'])->name('apoteker.destroy');
 
     // Transaksi
-    Route::get('/pembelian', function () {
-        return view('transaksi.pembelian');
-    })->name('pembelian');
+
+    // Route untuk halaman pembelian
+    Route::get('/pembelian', [PembelianController::class, 'index'])->name('pembelian.index');
+    Route::post('/pembelian/simpan', [PembelianController::class, 'simpan'])->name('pembelian.simpan');
+    // Route untuk mendapatkan data obat berdasarkan supplier
+    Route::get('/get-obat-by-supplier/{supplierId}', [PembelianController::class, 'getObatBySupplier'])->name('pembelian.getObatBySupplier');
+
 
     Route::get('/penjualan', function () {
         return view('transaksi.penjualan');

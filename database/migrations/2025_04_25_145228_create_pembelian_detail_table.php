@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('nota');
             $table->string('kode_obat');
             $table->integer('jumlah');
+            $table->decimal('harga', 10, 2); // Tambahkan kolom harga
+            $table->decimal('subtotal', 10, 2); // Tambahkan kolom subtotal
             $table->timestamps();
 
             // Foreign key constraints
